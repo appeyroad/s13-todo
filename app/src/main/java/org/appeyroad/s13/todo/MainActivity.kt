@@ -21,22 +21,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val todos = mutableListOf<ToDo>()
-
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.adapter = CustomAdapter(todos)
 
         fab.setOnClickListener { view ->
             startActivity(Intent(this, EditorActivity::class.java))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         Realm.init(this)
         val realm = Realm.getDefaultInstance()
-        realm.addChangeListener {
-            val all = it.where<ToDo>().findAll()
-            todos.clear()
-            todos.addAll(all)
-        }
+        val todos = realm.where<ToDo>().findAll().toMutableList()
+        recycler.adapter = CustomAdapter(todos)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

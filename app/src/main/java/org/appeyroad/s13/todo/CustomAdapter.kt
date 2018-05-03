@@ -12,7 +12,7 @@ class CustomAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
-        val view = View.inflate(context, R.layout.item_todo, parent)
+        val view = View.inflate(context, R.layout.item_todo, null)
         return ViewHolder(view)
     }
 
